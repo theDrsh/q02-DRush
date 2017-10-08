@@ -71,11 +71,75 @@ TEST(PiezasTest, maxColBoundary) {
   Piezas testBoard;
   ASSERT_EQ(Invalid, testBoard.pieceAt(0,5));
 }
-/*TEST(PiezasTest, sanityCheck)
-TEST(PiezasTest, sanityCheck)
-TEST(PiezasTest, sanityCheck)
-TEST(PiezasTest, sanityCheck)
-TEST(PiezasTest, sanityCheck)
-TEST(PiezasTest, sanityCheck)
-TEST(PiezasTest, sanityCheck)
-TEST(PiezasTest, sanityCheck)*/
+
+TEST(PiezasTest, rowWin) {
+    Piezas testBoard;
+    testBoard.dropPiece(0); //X
+    testBoard.dropPiece(0); //O
+    testBoard.dropPiece(1); //X
+    testBoard.dropPiece(0); //O
+    testBoard.dropPiece(2); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(3); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(2); //X
+    testBoard.dropPiece(3); //O
+    testBoard.dropPiece(2); //X
+    testBoard.dropPiece(3); //O
+    ASSERT_EQ(testBoard.gameState(), X);
+}
+
+TEST(PiezasTest, colDraw) {
+    Piezas testBoard;
+    testBoard.dropPiece(0); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(0); //X
+    testBoard.dropPiece(2); //O
+    testBoard.dropPiece(3); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(0); //X
+    testBoard.dropPiece(2); //O
+    testBoard.dropPiece(3); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(2); //X
+    testBoard.dropPiece(3); //O
+    ASSERT_EQ(testBoard.gameState(), Blank);
+}
+
+TEST(PiezasTest, altDraw) {
+    Piezas testBoard;
+    testBoard.dropPiece(0); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(2); //X
+    testBoard.dropPiece(3); //O
+    testBoard.dropPiece(3); //X
+    testBoard.dropPiece(2); //O
+    testBoard.dropPiece(1); //X
+    testBoard.dropPiece(0); //O
+    testBoard.dropPiece(0); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(2); //X
+    testBoard.dropPiece(3); //O
+    ASSERT_EQ(testBoard.gameState(), Blank);
+}
+
+TEST(PiezasTest, unfinshedGame) {
+    Piezas testBoard;
+    ASSERT_EQ(testBoard.gameState(), Invalid);
+}
+
+TEST(PiezasTest, almostFinishedGame) {
+    Piezas testBoard;
+    testBoard.dropPiece(0); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(2); //X
+    testBoard.dropPiece(3); //O
+    testBoard.dropPiece(3); //X
+    testBoard.dropPiece(2); //O
+    testBoard.dropPiece(1); //X
+    testBoard.dropPiece(0); //O
+    testBoard.dropPiece(0); //X
+    testBoard.dropPiece(1); //O
+    testBoard.dropPiece(2); //X
+    ASSERT_EQ(testBoard.gameState(), Invalid);
+}

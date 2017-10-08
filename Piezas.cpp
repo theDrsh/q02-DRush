@@ -1,6 +1,5 @@
 #include "Piezas.h"
 #include <vector>
-#include <iostream>
 /** CLASS Piezas
  * Class for representing a Piezas vertical board, which is roughly based
  * on the game "Connect Four" where pieces are placed in a column and 
@@ -107,5 +106,75 @@ Piece Piezas::pieceAt(int row, int column)
 **/
 Piece Piezas::gameState()
 {
-    return Blank;
+    int longestX = 0;
+    int longestO = 0;
+    int xCount = 0;
+    int oCount = 0;
+    Piece cur;
+    Piece prev;
+    for(int i = 0; i < BOARD_COLS; i++) {
+        xCount = 0;
+        oCount = 0;
+        for(int j = 0; j < BOARD_ROWS; j++) {
+            cur = board[i][j];
+            if(cur == Blank) {
+                return Invalid;
+            }
+            else if(cur == X) {
+                if(prev == cur) {
+                    xCount++;
+                    if(xCount > longestX) {
+                        longestX = xCount;
+                    }
+                } 
+            }
+            else if(cur == O) {
+                if(prev == cur) {
+                    oCount++;
+                    if(oCount > longestO) {
+                        longestO = oCount;
+                    }
+                } 
+            }
+          prev = cur;
+        }
+    }
+    cur = Blank;
+    prev = Invalid;
+    for(int i = 0; i < BOARD_ROWS; i++) {
+        xCount = 0;
+        oCount = 0;
+        for(int j = 0; j < BOARD_COLS; j++) {
+            cur = board[i][j];
+            if(cur == Blank) {
+                return Invalid;
+            }
+            else if(cur == X) {
+                if(prev == cur) {
+                    xCount++;
+                    if(xCount > longestX) {
+                        longestX = xCount;
+                    }
+                } 
+            }
+            else if(cur == O) {
+                if(prev == cur) {
+                    oCount++;
+                    if(oCount > longestO) {
+                        longestO = oCount;
+                    }
+                } 
+            }
+            prev = cur;
+        }
+    }
+    if(longestO > longestX) {
+        return O;
+    }
+    else if(longestO == longestX) {
+        return Blank;
+    }
+    else {
+        return X;
+    }
 }
