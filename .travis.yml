@@ -15,4 +15,5 @@ before_install:
 script:
   - make clean
   - make
+  - ls
   - ./PiezasTest
